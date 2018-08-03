@@ -8,7 +8,6 @@ Allows for admins to enter events, view purchased tickets, and for users to regi
 Services and their descriptions that the application should provide:
 
 1. **`UserService`** manages registered users:
-
   * `save`, `remove`, `getById`, `getUserByEmail`, `getAll`
   
 2. **`EventService`** manages events (movie shows). Event contains only basic information, like name, base price for tickets, rating (high, mid, low). Event can be presented on several dates and several times within each day. For each dateTime an Event will be presented only in single Auditorium.
