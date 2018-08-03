@@ -7,15 +7,12 @@ Allows for admins to enter events, view purchased tickets, and for users to regi
 ## Task to do
 Services and their descriptions that the application should provide:
 
-1. **`UserService`** manages registered users:
-   methods `save`, `remove`, `getById`, `getUserByEmail`, `getAll`
+1. **`UserService`** manages registered users:`save`, `remove`, `getById`, `getUserByEmail`, `getAll`
 2. **`EventService`** manages events (movie shows). Event contains only basic information, like name, base price for tickets, rating (high, mid, low). Event can be presented on several dates and several times within each day. For each dateTime an Event will be presented only in single Auditorium.
 
-   methods `save`, `remove`, `getById`, `getByName`, `getAll`;
-   
-   methods `getForDateRange(from, to)` returns events for specified date range (OPTIONAL)
-     
-   methods `getNextEvents(to)` returns events from now till the ‘to’ date (OPTIONAL)
+   `save`, `remove`, `getById`, `getByName`, `getAll`;
+   `getForDateRange(from, to)` returns events for specified date range (OPTIONAL)
+   `getNextEvents(to)` returns events from now till the ‘to’ date (OPTIONAL)
 3. **`AuditoriumService`** returns info about auditoriums and places. Since auditorium information is usually static, store it in some property file. The information that needs to be stored is:
    ```
     name
