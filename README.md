@@ -18,11 +18,11 @@ Services and their descriptions that the application should provide:
 
 
 3. **`AuditoriumService`** returns info about auditoriums and places. Since auditorium information is usually static, store it in some property file. The information that needs to be stored is:
-  * ```
+   ```
     name
     number of seats
     vip seats (comma-separated list of expensive seats)
-    ```   
+   ```   
    Several auditoriums can be stored in separate property files or in a single file, information from them should be injected into the AuditoriumService
   * `getAll()`, `getByName()`
   
