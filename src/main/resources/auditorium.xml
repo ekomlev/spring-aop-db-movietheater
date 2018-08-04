@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                http://www.springframework.org/schema/util
+ 	        	http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:auditorium.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+    </bean>
+
+
+    <bean id="auditoriumRepository" class="com.epam.spring.movieTheaterManagement.domain.Auditorium"
+          scope="singleton">
+        <util:set>
+            <bean id="auditoriumSmall"
+                  p:name="${auditorium1.name}"
+                  p:numberOfSeats="${auditorium1.numberOfSeats}"
+                  p:vipSeats="${auditorium1.vipSeats}"/>
+            <bean id="auditoriumBig"
+                  p:name="${auditorium2.name}"
+                  p:numberOfSeats="${auditorium2.numberOfSeats}"
+                  p:vipSeats="${auditorium2.vipSeats}"/>
+        </util:set>
+    </bean>
+
+</beans>

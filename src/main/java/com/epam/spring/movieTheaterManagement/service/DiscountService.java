@@ -28,5 +28,4 @@ public interface DiscountService {
      * @return discount value from 0 to 100
      */
     byte getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long numberOfTickets);
-
 }

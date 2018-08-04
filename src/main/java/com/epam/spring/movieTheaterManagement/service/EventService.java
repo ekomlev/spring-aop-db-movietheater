@@ -39,5 +39,4 @@ public interface EventService extends AbstractDomainObjectService<Event> {
      * @return Set of events
      */
     // public @Nonnull Set<Event> getNextEvents(@Nonnull LocalDateTime to);
-
 }

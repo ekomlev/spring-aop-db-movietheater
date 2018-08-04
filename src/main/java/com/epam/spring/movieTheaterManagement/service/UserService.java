@@ -18,5 +18,4 @@ public interface UserService extends AbstractDomainObjectService<User> {
      * @return found user or <code>null</code>
      */
     public @Nullable User getUserByEmail(@Nonnull String email);
-
 }

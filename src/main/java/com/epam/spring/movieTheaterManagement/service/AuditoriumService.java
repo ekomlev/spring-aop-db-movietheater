@@ -27,5 +27,4 @@ public interface AuditoriumService {
      * @return found auditorium or <code>null</code>
      */
     public @Nullable Auditorium getByName(@Nonnull String name);
-
 }
