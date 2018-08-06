@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="
                 http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
                 http://www.springframework.org/schema/util
  	        	http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-    <import resource="auditoriums.xml"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>src/main/resources/auditorium.properties</value>
+                <value>src/main/resources/discount.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
 
+    <import resource="auditorium-context.xml"/>
+    <import resource="discount-context.xml"/>
 
+    <bean id="eventDao" class="com.epam.spring.movieTheaterManagement.dao.EventDao"/>
+    <bean id="userDao" class="com.epam.spring.movieTheaterManagement.dao.UserDao"/>
+    <bean id="ticketDao" class="com.epam.spring.movieTheaterManagement.dao.TicketDao"/>
+
+    <bean id="theaterUserService" class="com.epam.spring.movieTheaterManagement.service.TheaterUserService">
+        <constructor-arg ref="userDao"/>
+    </bean>
+
+    <bean id="theaterEventService" class="com.epam.spring.movieTheaterManagement.service.TheaterEventService">
+        <constructor-arg ref="eventDao"/>
+    </bean>
+
+    <bean id="theaterBookingService" class="com.epam.spring.movieTheaterManagement.service.TheaterBookingService">
+        <constructor-arg ref="ticketDao"/>
+        <constructor-arg ref="theaterDiscountService"/>
+        <constructor-arg ref="theaterUserService"/>
+    </bean>
 </beans>

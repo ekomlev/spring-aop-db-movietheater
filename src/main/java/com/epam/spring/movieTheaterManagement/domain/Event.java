@@ -18,6 +18,18 @@ public class Event extends DomainObject {
     private EventRating rating;
     private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
 
+    public Event() {}
+
+    public Event(Long id, String name, NavigableSet<LocalDateTime> airDates, double basePrice,
+                 EventRating rating, NavigableMap<LocalDateTime, Auditorium> auditoriums) {
+        setId(id);
+        this.name = name;
+        this.airDates = airDates;
+        this.basePrice = basePrice;
+        this.rating = rating;
+        this.auditoriums = auditoriums;
+    }
+
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
      * auditorium to it.
@@ -198,5 +210,17 @@ public class Event extends DomainObject {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
+                ", airDates=" + airDates +
+                ", basePrice=" + basePrice +
+                ", rating=" + rating +
+                ", auditoriums=" + auditoriums +
+                '}';
     }
 }

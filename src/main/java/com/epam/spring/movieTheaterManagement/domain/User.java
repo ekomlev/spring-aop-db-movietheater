@@ -1,5 +1,7 @@
 package com.epam.spring.movieTheaterManagement.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -12,6 +14,18 @@ public class User extends DomainObject {
     private String lastName;
     private String email;
     private NavigableSet<Ticket> tickets = new TreeSet<>();
+    private LocalDate birthday;
+
+    public User() {
+    }
+
+    public User(Long id, String firstName, String lastName, String email, String birthday) {
+        setId(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthday = LocalDate.parse(birthday);
+    }
 
     public String getFirstName() {
         return firstName;
@@ -43,6 +57,14 @@ public class User extends DomainObject {
 
     public void setTickets(NavigableSet<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = LocalDate.parse(birthday);
     }
 
     @Override
@@ -84,5 +106,17 @@ public class User extends DomainObject {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + getId() + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", tickets=" + tickets +
+                ", birthday=" + birthday +
+                '}';
     }
 }

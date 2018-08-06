@@ -108,5 +108,4 @@ public class TestEvent {
 		
 		assertTrue(event.getAuditoriums().isEmpty());
 	}
-
 }

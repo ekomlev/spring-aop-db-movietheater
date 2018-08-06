@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                http://www.springframework.org/schema/util
+ 	        	http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <util:set id="auditoriumSet">
+        <bean id="auditoriumSmall" class="com.epam.spring.movieTheaterManagement.domain.Auditorium"
+              p:name="${auditorium1.name}"
+              p:numberOfSeats="${auditorium1.numberOfSeats}"
+              p:vipSeats="#{'${auditorium1.vipSeats}'.split(',')}"/>
+        <bean id="auditoriumBig" class="com.epam.spring.movieTheaterManagement.domain.Auditorium"
+              p:name="${auditorium2.name}"
+              p:numberOfSeats="${auditorium2.numberOfSeats}"
+              p:vipSeats="#{'${auditorium2.vipSeats}'.split(',')}"/>
+    </util:set>
+
+    <bean id="theaterAuditoriumService"
+          class="com.epam.spring.movieTheaterManagement.service.TheaterAuditoriumService">
+        <constructor-arg ref="auditoriumSet"/>
+    </bean>
+</beans>
