@@ -3,26 +3,22 @@ package com.epam.spring.movieTheaterManagement.dao;
 import com.epam.spring.movieTheaterManagement.domain.Auditorium;
 import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.EventRating;
-import com.epam.spring.movieTheaterManagement.domain.User;
 
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
 import java.util.function.Predicate;
 
 public class EventDao implements Dao<Event> {
     private static List<Event> eventsList = new ArrayList<>();
 
-    public EventDao() {}
-
-    /*public EventDao(List<Event> eventsList) {
-        this.eventsList = eventsList;
-    }*/
-
     public Event createEvent(Long id, String name, NavigableSet<LocalDateTime> airDates, double basePrice,
-                            EventRating rating, NavigableMap<LocalDateTime, Auditorium> auditoriums) {
+                             EventRating rating, NavigableMap<LocalDateTime, Auditorium> auditoriums) {
 
-        Event newEvent = new Event(id, name, airDates, basePrice, rating,auditoriums);
+        Event newEvent = new Event(id, name, airDates, basePrice, rating, auditoriums);
         eventsList.add(newEvent);
         return newEvent;
     }

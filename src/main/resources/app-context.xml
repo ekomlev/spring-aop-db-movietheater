@@ -14,6 +14,7 @@
             <list>
                 <value>src/main/resources/auditorium.properties</value>
                 <value>src/main/resources/discount.properties</value>
+                <value>src/main/resources/price.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>
@@ -36,8 +37,10 @@
     </bean>
 
     <bean id="theaterBookingService" class="com.epam.spring.movieTheaterManagement.service.TheaterBookingService">
+        <constructor-arg value="#{${high.event.price.rate}}"/>
+        <constructor-arg value="#{${vip.seats.price.rate}}"/>
         <constructor-arg ref="ticketDao"/>
-        <constructor-arg ref="theaterDiscountService"/>
         <constructor-arg ref="theaterUserService"/>
+        <constructor-arg ref="theaterDiscountService"/>
     </bean>
 </beans>

@@ -10,7 +10,8 @@ import java.util.List;
 public class TheaterEventService implements EventService {
     private EventDao eventDao;
 
-    public TheaterEventService() {}
+    public TheaterEventService() {
+    }
 
     public TheaterEventService(EventDao eventDao) {
         this.eventDao = eventDao;

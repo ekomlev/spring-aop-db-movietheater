@@ -17,8 +17,17 @@ public class TheaterDiscountService implements DiscountService {
     }
 
     @Override
-    public byte getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long numberOfTickets) {
-        return 0;
+    public double getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long numberOfTickets) {
+        double maxDiscount = 0;
+
+        for (DiscountStrategy discountStrategy: discountStrategyList) {
+            double currentDiscount = discountStrategy.getDiscount(user, event, airDateTime, numberOfTickets);
+            if (currentDiscount > maxDiscount) {
+                maxDiscount = currentDiscount;
+            }
+        }
+
+        return maxDiscount;
     }
 
     public List<DiscountStrategy> getDiscountStrategyList() {

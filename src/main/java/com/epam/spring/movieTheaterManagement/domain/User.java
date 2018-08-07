@@ -14,17 +14,21 @@ public class User extends DomainObject {
     private String lastName;
     private String email;
     private NavigableSet<Ticket> tickets = new TreeSet<>();
-    private LocalDate birthday;
+    private LocalDateTime birthday;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String birthday) {
+    public User(Long id, String firstName, String lastName, String email, LocalDateTime birthday) {
         setId(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.birthday = LocalDate.parse(birthday);
+        this.birthday = birthday;
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
     }
 
     public String getFirstName() {
@@ -59,12 +63,12 @@ public class User extends DomainObject {
         this.tickets = tickets;
     }
 
-    public LocalDate getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = LocalDate.parse(birthday);
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
     }
 
     @Override
@@ -111,8 +115,7 @@ public class User extends DomainObject {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + getId() + '\'' +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", tickets=" + tickets +
