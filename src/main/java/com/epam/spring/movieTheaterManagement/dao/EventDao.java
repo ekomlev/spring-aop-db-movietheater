@@ -3,6 +3,7 @@ package com.epam.spring.movieTheaterManagement.dao;
 import com.epam.spring.movieTheaterManagement.domain.Auditorium;
 import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.EventRating;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.function.Predicate;
 
+@Component("eventDao")
 public class EventDao implements Dao<Event> {
     private static List<Event> eventsList = new ArrayList<>();
 

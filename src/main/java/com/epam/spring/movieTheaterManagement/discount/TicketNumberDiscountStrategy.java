@@ -2,16 +2,22 @@ package com.epam.spring.movieTheaterManagement.discount;
 
 import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.User;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Component("ticketNumberDiscountStrategy")
+@PropertySource("file:src/main/resources/discount.properties")
 public class TicketNumberDiscountStrategy implements DiscountStrategy {
-    private int ticketNumber;
-    private double ticketNumberDiscount;
 
-    public TicketNumberDiscountStrategy() {
-    }
+    @Value("${ticket.number}")
+    private int ticketNumber;
+
+    @Value("#{${ticket.number.discount}}")
+    private double ticketNumberDiscount;
 
     @Override
     public double getDiscount(User user, Event event, LocalDateTime eventDateTime, Long numberOfTickets) {

@@ -2,16 +2,20 @@ package com.epam.spring.movieTheaterManagement.discount;
 
 import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.User;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Component("birthdayDiscountStrategy")
+@PropertySource("file:src/main/resources/discount.properties")
 public class BirthdayDiscountStrategy implements DiscountStrategy {
     private static final int EXPECTED_DAYS_DELTA = 5;
-    private double birthdayDiscount;
 
-    public BirthdayDiscountStrategy() {
-    }
+    @Value("#{${birthday.discount}}")
+    private double birthdayDiscount;
 
     @Override
     public double getDiscount(User user, Event event, LocalDateTime eventDateTime, Long numberOfTickets) {

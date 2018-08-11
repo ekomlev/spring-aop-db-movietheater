@@ -2,14 +2,14 @@ package com.epam.spring.movieTheaterManagement;
 
 import static java.lang.System.out;
 
+import com.epam.spring.movieTheaterManagement.configuration.AuditoriumConfiguration;
 import com.epam.spring.movieTheaterManagement.dao.AuditoriumDao;
 import com.epam.spring.movieTheaterManagement.domain.*;
 import com.epam.spring.movieTheaterManagement.service.AuditoriumService;
 import com.epam.spring.movieTheaterManagement.service.BookingService;
 import com.epam.spring.movieTheaterManagement.service.EventService;
 import com.epam.spring.movieTheaterManagement.service.UserService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,7 +21,10 @@ public class App {
          * Run app to verify beans
          */
 
-        ApplicationContext ctx = new FileSystemXmlApplicationContext("src/main/resources/app-context.xml");
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.register(AuditoriumConfiguration.class);
+        ctx.scan("com.epam.spring.movieTheaterManagement");
+        ctx.refresh();
 
         UserService theaterUserService = (UserService) ctx.getBean("theaterUserService");
         out.println("Users before: " + theaterUserService.getAll());

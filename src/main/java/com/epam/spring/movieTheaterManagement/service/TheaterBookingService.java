@@ -2,6 +2,10 @@ package com.epam.spring.movieTheaterManagement.service;
 
 import com.epam.spring.movieTheaterManagement.dao.TicketDao;
 import com.epam.spring.movieTheaterManagement.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,12 +14,23 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service("theaterBookingService")
+@PropertySource("file:src/main/resources/price.properties")
 public class TheaterBookingService implements BookingService {
+
+    @Value("#{${high.event.price.rate}}")
     private double highEventPriceRate;
+    @Value("#{${vip.seats.price.rate}}")
     private double vipSeatsPriceRate;
+    @Autowired
     private TicketDao ticketDao;
+    @Autowired
     private UserService userService;
+    @Autowired
     private DiscountService discountService;
+
+    public TheaterBookingService() {
+    }
 
     public TheaterBookingService(double highEventPriceRate, double vipSeatsPriceRate,
                                  TicketDao ticketDao, UserService userService,

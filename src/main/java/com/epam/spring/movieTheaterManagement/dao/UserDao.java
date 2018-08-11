@@ -1,6 +1,7 @@
 package com.epam.spring.movieTheaterManagement.dao;
 
 import com.epam.spring.movieTheaterManagement.domain.User;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+@Component("userDao")
 public class UserDao implements Dao<User> {
     private List<User> usersList = new ArrayList<>();
 

@@ -3,15 +3,19 @@ package com.epam.spring.movieTheaterManagement.service;
 import com.epam.spring.movieTheaterManagement.discount.DiscountStrategy;
 import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service("theaterDiscountService")
 public class TheaterDiscountService implements DiscountService {
     private List<DiscountStrategy> discountStrategyList;
 
+    @Autowired
     public TheaterDiscountService(List<DiscountStrategy> discountStrategyList) {
         this.discountStrategyList = discountStrategyList;
     }
@@ -20,7 +24,7 @@ public class TheaterDiscountService implements DiscountService {
     public double getDiscount(@Nullable User user, @Nonnull Event event, @Nonnull LocalDateTime airDateTime, long numberOfTickets) {
         double maxDiscount = 0;
 
-        for (DiscountStrategy discountStrategy: discountStrategyList) {
+        for (DiscountStrategy discountStrategy : discountStrategyList) {
             double currentDiscount = discountStrategy.getDiscount(user, event, airDateTime, numberOfTickets);
             if (currentDiscount > maxDiscount) {
                 maxDiscount = currentDiscount;
