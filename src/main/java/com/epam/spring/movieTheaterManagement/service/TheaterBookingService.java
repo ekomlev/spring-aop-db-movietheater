@@ -96,6 +96,12 @@ public class TheaterBookingService implements BookingService {
                 .collect(Collectors.toSet());
     }
 
+    @Nonnull
+    @Override
+    public Set<Ticket> getAllTickets() {
+        return ticketDao.getAll();
+    }
+
     public double getHighEventPriceRate() {
         return highEventPriceRate;
     }

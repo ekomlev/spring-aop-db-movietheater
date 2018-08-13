@@ -2,6 +2,8 @@ package com.epam.spring.movieTheaterManagement;
 
 import static java.lang.System.out;
 
+import com.epam.spring.movieTheaterManagement.aspect.CounterAspect;
+import com.epam.spring.movieTheaterManagement.aspect.DiscountAspect;
 import com.epam.spring.movieTheaterManagement.configuration.AuditoriumConfiguration;
 import com.epam.spring.movieTheaterManagement.dao.AuditoriumDao;
 import com.epam.spring.movieTheaterManagement.domain.*;
@@ -13,6 +15,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class App {
     public static void main(String[] args) {
@@ -23,6 +27,7 @@ public class App {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(AuditoriumConfiguration.class);
+//        ctx.register(AspectConfiguration.class);
         ctx.scan("com.epam.spring.movieTheaterManagement");
         ctx.refresh();
 
@@ -44,9 +49,25 @@ public class App {
                 .getPurchasedTicketsForEvent(theaterEventService.getByName("Future World"),
                         LocalDateTime.of(2018, 9, 27, 19, 0)));
         createTicketSet(theaterBookingService, theaterEventService, theaterUserService);
-        out.println("Booked tickets before: " + theaterBookingService
+        out.println("Booked tickets after: " + theaterBookingService
                 .getPurchasedTicketsForEvent(theaterEventService.getByName("Future World"),
                         LocalDateTime.of(2018, 9, 27, 19, 0)));
+
+        CounterAspect counterAspect = (CounterAspect) ctx.getBean("counterAspect");
+        out.println("Count of calls to event after: " + counterAspect.getNameEventCounter());
+
+        theaterBookingService.getTicketsPrice(theaterEventService.getByName("Future World"),
+                LocalDateTime.of(2018, 9, 27, 19, 0),
+                theaterUserService.getById(1L),
+                Stream.of(1L, 2L)
+                        .collect(Collectors.toSet()));
+        out.println("Count of calls to ticket price after: " + counterAspect.getTicketsPriceEventCounter());
+
+        out.println("Count of calls to booked tickets after: " + counterAspect.getBookedTicketsEventCounter());
+
+        DiscountAspect discountAspect = (DiscountAspect) ctx.getBean("discountAspect");
+        out.println("Count of calls to getDiscount after: " + discountAspect.getDiscountCounter().size());
+        out.println("Count of applied getDiscount after: " + discountAspect.getDiscountCounter());
     }
 
     private static void createUsers(UserService theaterUserService) {
@@ -79,8 +100,8 @@ public class App {
         LocalDateTime airDate = LocalDateTime.of(2018, 9, 27, 19, 0);
         User user = theaterUserService.getById(1L);
         long seat = 2;
-        ticketSet.add(new Ticket(user, event, airDate, seat));
+        double price = event.getBasePrice();
+        ticketSet.add(new Ticket(user, event, airDate, seat, price));
         theaterBookingService.bookTickets(ticketSet);
-
     }
 }
