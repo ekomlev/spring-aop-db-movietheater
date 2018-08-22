@@ -1,7 +1,6 @@
 package com.epam.spring.movieTheaterManagement.service;
 
-import java.util.Set;
-
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -14,17 +13,16 @@ public interface AuditoriumService {
 
     /**
      * Getting all auditoriums from the system
-     * 
      * @return set of all auditoriums
      */
-    public @Nonnull Set<Auditorium> getAll();
+    public @Nonnull
+    List<Auditorium> getAll();
 
     /**
      * Finding auditorium by name
-     * 
-     * @param name
-     *            Name of the auditorium
+     * @param name Name of the auditorium
      * @return found auditorium or <code>null</code>
      */
-    public @Nullable Auditorium getByName(@Nonnull String name);
+    public @Nullable
+    Auditorium getByName(@Nonnull String name);
 }

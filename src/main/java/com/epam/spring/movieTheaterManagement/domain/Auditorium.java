@@ -1,7 +1,7 @@
 package com.epam.spring.movieTheaterManagement.domain;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,12 +10,16 @@ import java.util.stream.LongStream;
 /**
  * @author Yuriy_Tkach
  */
-public class Auditorium {
+public class Auditorium extends DomainObject {
     private String name;
     private long numberOfSeats;
-    private Set<Long> vipSeats = Collections.emptySet();
+    private List<Long> vipSeats;
 
-    public Auditorium() {
+    public Auditorium(Long id, String name, long numberOfSeats, List<Long> vipSeats) {
+        setId(id);
+        this.name = name;
+        this.numberOfSeats = numberOfSeats;
+        this.vipSeats = vipSeats;
     }
 
     /**
@@ -47,11 +51,11 @@ public class Auditorium {
         return LongStream.range(1, numberOfSeats + 1).boxed().collect(Collectors.toSet());
     }
 
-    public Set<Long> getVipSeats() {
+    public List<Long> getVipSeats() {
         return vipSeats;
     }
 
-    public void setVipSeats(Set<Long> vipSeats) {
+    public void setVipSeats(List<Long> vipSeats) {
         this.vipSeats = vipSeats;
     }
 
@@ -84,10 +88,8 @@ public class Auditorium {
 
     @Override
     public String toString() {
-        return "Auditorium{" +
-                "name='" + name + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", vipSeats=" + vipSeats +
-                '}';
+        return "Auditorium " + '\'' + name + '\'' +
+                ", number of seats: " + numberOfSeats +
+                ", vip seats: " + vipSeats;
     }
 }

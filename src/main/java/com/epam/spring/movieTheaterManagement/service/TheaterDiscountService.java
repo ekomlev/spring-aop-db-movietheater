@@ -1,15 +1,16 @@
 package com.epam.spring.movieTheaterManagement.service;
 
-import com.epam.spring.movieTheaterManagement.discount.DiscountStrategy;
-import com.epam.spring.movieTheaterManagement.domain.Event;
-import com.epam.spring.movieTheaterManagement.domain.User;
+import java.time.LocalDateTime;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.epam.spring.movieTheaterManagement.discount.DiscountStrategy;
+import com.epam.spring.movieTheaterManagement.domain.Event;
+import com.epam.spring.movieTheaterManagement.domain.User;
 
 @Service("theaterDiscountService")
 public class TheaterDiscountService implements DiscountService {

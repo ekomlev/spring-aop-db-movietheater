@@ -1,13 +1,14 @@
 package com.epam.spring.movieTheaterManagement.service;
 
-import com.epam.spring.movieTheaterManagement.dao.EventDao;
-import com.epam.spring.movieTheaterManagement.domain.Event;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
+import com.epam.spring.movieTheaterManagement.dao.EventDao;
+import com.epam.spring.movieTheaterManagement.domain.Event;
 
 @Service("theaterEventService")
 public class TheaterEventService implements EventService {

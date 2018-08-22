@@ -1,0 +1,17 @@
+----------------------------------------------------------------
+Sat Aug 18 19:52:30 MSK 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0165-4df3-d760-00000e2040c8 
+on database directory memory:D:\Projects\movie-theater-management\MovieTheaterManagementDB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/C:/Users/Eduard_Komleu/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_162-b12
+user.dir=D:\Projects\movie-theater-management
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+derby.stream.error.method=org.springframework.jdbc.datasource.embedded.OutputStreamFactory.getNoopOutputStream
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Aug 18 19:52:31 MSK 2018:
+Shutting down instance a816c00e-0165-4df3-d760-00000e2040c8 on database directory memory:D:\Projects\movie-theater-management\MovieTheaterManagementDB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 

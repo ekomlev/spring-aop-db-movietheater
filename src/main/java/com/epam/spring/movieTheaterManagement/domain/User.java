@@ -1,6 +1,5 @@
 package com.epam.spring.movieTheaterManagement.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NavigableSet;
 import java.util.Objects;
@@ -17,6 +16,13 @@ public class User extends DomainObject {
     private LocalDateTime birthday;
 
     public User() {
+    }
+
+    public User(String firstName, String lastName, String email, LocalDateTime birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthday = birthday;
     }
 
     public User(Long id, String firstName, String lastName, String email, LocalDateTime birthday) {
@@ -115,7 +121,8 @@ public class User extends DomainObject {
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "id='" + getId() + '\'' +
+                " firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", tickets=" + tickets +

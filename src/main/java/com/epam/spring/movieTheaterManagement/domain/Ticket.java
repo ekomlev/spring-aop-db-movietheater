@@ -21,6 +21,15 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         this.price = price;
     }
 
+    public Ticket(Long id, User user, Event event, LocalDateTime dateTime, long seat, double price) {
+        setId(id);
+        this.user = user;
+        this.event = event;
+        this.dateTime = dateTime;
+        this.seat = seat;
+        this.price = price;
+    }
+
     public User getUser() {
         return user;
     }

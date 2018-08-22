@@ -1,22 +1,26 @@
 package com.epam.spring.movieTheaterManagement.aspect;
 
-import com.epam.spring.movieTheaterManagement.domain.Event;
-import com.epam.spring.movieTheaterManagement.domain.Ticket;
+import java.util.*;
+
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import com.epam.spring.movieTheaterManagement.dao.CallCountDao;
+import com.epam.spring.movieTheaterManagement.domain.Event;
+import com.epam.spring.movieTheaterManagement.domain.Ticket;
 
 @Aspect
-@EnableAspectJAutoProxy
 @Component("counterAspect")
 public class CounterAspect {
-    private Map<Event, Long> nameEventCounter = new HashMap<>();
-    private Map<Event, Long> ticketsPriceEventCounter = new HashMap<>();
-    private Map<Event, Long> bookedTicketsEventCounter = new HashMap<>();
+    private Map<Event, Long> eventByNameCallCounter = new HashMap<>();
+    private Map<Event, Long> eventTicketPriceCallCounter = new HashMap<>();
+    private Map<Event, Long> eventTicketBookingCallCounter = new HashMap<>();
+
+    @Autowired
+    CallCountDao callCountDao;
 
     @Pointcut(
             "execution(" +
@@ -35,60 +39,65 @@ public class CounterAspect {
             "execution(" +
                     "* com.epam.spring.movieTheaterManagement.service.BookingService.bookTickets(..)) " +
                     "&& args(tickets, ..)")
-    public void getBookedTicketsEvent(Set<Ticket> tickets) {
+    public void getBookedTicketsEvent(List<Ticket> tickets) {
     }
 
     @AfterReturning(pointcut = "getByNameEvent()", returning = "event")
-    public void eventCallsCount(Event event) {
-        callsCount(nameEventCounter, event);
-        System.out.println("Event is called");
+    public void eventByNameCall(Event event) {
+        callsCount(eventByNameCallCounter, event);
+        System.out.println("Event " + event.getName() + " is called");
     }
 
     @AfterReturning(pointcut = "getTicketsPriceEvent(event)", argNames = "event")
-    public void ticketsPriceEventCallsCount(Event event) {
-        callsCount(ticketsPriceEventCounter, event);
-        System.out.println("TicketsPriceEvent is called");
+    public void eventTicketPriceCallCount(Event event) {
+        callsCount(eventTicketPriceCallCounter, event);
+        System.out.println("TicketsPriceEvent is called, event: " + event.getName());
     }
 
     @AfterReturning(pointcut = "getBookedTicketsEvent(tickets)", argNames = "tickets")
-    public void bookedTicketsEventCallsCount(Set<Ticket> tickets) {
+    public void eventTicketBookingCallCount(List<Ticket> tickets) {
         Set<Event> events = new HashSet<>();
         tickets
                 .forEach(ticket -> events.add(ticket.getEvent()));
 
         events
                 .forEach(event -> {
-                    callsCount(bookedTicketsEventCounter, event);
-                    System.out.println("BookedTicketsEvent is called");
+                    callsCount(eventTicketBookingCallCounter, event);
+                    System.out.println("BookedTicketsEvent is called, event: " + event.getName());
                 });
     }
 
     private void callsCount(Map<Event, Long> counterMap, Event event) {
         long currentCount = counterMap.getOrDefault(event, 0L);
         counterMap.put(event, currentCount + 1L);
+
+        callCountDao.updateCounterByEvent(event,
+                eventByNameCallCounter.getOrDefault(event, 0L),
+                eventTicketPriceCallCounter.getOrDefault(event, 0L),
+                eventTicketBookingCallCounter.getOrDefault(event, 0L));
     }
 
-    public Map<Event, Long> getNameEventCounter() {
-        return Collections.unmodifiableMap(nameEventCounter);
+    public Map<Event, Long> getEventByNameCallCounter() {
+        return Collections.unmodifiableMap(eventByNameCallCounter);
     }
 
-    public void setNameEventCounter(Map<Event, Long> nameEventCounter) {
-        this.nameEventCounter = nameEventCounter;
+    public void setEventByNameCallCounter(Map<Event, Long> eventByNameCallCounter) {
+        this.eventByNameCallCounter = eventByNameCallCounter;
     }
 
-    public Map<Event, Long> getTicketsPriceEventCounter() {
-        return Collections.unmodifiableMap(ticketsPriceEventCounter);
+    public Map<Event, Long> getEventTicketPriceCallCounter() {
+        return Collections.unmodifiableMap(eventTicketPriceCallCounter);
     }
 
-    public void setTicketsPriceEventCounter(Map<Event, Long> ticketsPriceEventCounter) {
-        this.ticketsPriceEventCounter = ticketsPriceEventCounter;
+    public void setEventTicketPriceCallCounter(Map<Event, Long> eventTicketPriceCallCounter) {
+        this.eventTicketPriceCallCounter = eventTicketPriceCallCounter;
     }
 
-    public Map<Event, Long> getBookedTicketsEventCounter() {
-        return Collections.unmodifiableMap(bookedTicketsEventCounter);
+    public Map<Event, Long> getEventTicketBookingCallCounter() {
+        return Collections.unmodifiableMap(eventTicketBookingCallCounter);
     }
 
-    public void setBookedTicketsEventCounter(Map<Event, Long> bookedTicketsEventCounter) {
-        this.bookedTicketsEventCounter = bookedTicketsEventCounter;
+    public void setEventTicketBookingCallCounter(Map<Event, Long> eventTicketBookingCallCounter) {
+        this.eventTicketBookingCallCounter = eventTicketBookingCallCounter;
     }
 }

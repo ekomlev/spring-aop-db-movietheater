@@ -1,13 +1,14 @@
 package com.epam.spring.movieTheaterManagement.discount;
 
-import com.epam.spring.movieTheaterManagement.domain.Event;
-import com.epam.spring.movieTheaterManagement.domain.User;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.epam.spring.movieTheaterManagement.domain.Event;
+import com.epam.spring.movieTheaterManagement.domain.User;
 
 @Component("ticketNumberDiscountStrategy")
 @PropertySource("file:src/main/resources/discount.properties")

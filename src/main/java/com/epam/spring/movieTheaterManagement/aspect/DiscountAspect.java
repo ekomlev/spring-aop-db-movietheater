@@ -1,24 +1,30 @@
 package com.epam.spring.movieTheaterManagement.aspect;
 
-import com.epam.spring.movieTheaterManagement.domain.User;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.stereotype.Component;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.epam.spring.movieTheaterManagement.dao.CallCountDao;
+import com.epam.spring.movieTheaterManagement.domain.Event;
+import com.epam.spring.movieTheaterManagement.domain.User;
+
 @Aspect
-@EnableAspectJAutoProxy
 @Component("discountAspect")
 public class DiscountAspect {
-    private Map<Class<?>, Map<User, Integer>> discountCounter = new HashMap<>();
-    Map<User, Integer> userMap = new HashMap<>();
+    private Map<Class<?>, Map<User, Long>> ticketDiscountCallCounter = new HashMap<>();
+    Map<User, Long> userMap = new HashMap<>();
+    Map<Event, Long> eventTicketDiscountCallCounter = new HashMap<>();
+
+    @Autowired
+    CallCountDao callCountDao;
 
     @Pointcut(
             "execution(" +
@@ -29,32 +35,44 @@ public class DiscountAspect {
     @AfterReturning(pointcut = "getDiscountStrategy()")
     public void getDiscountStrategyCount(JoinPoint joinPoint) {
 
-        if (joinPoint.getArgs()[0] instanceof User) {
+        if (joinPoint.getArgs()[0] instanceof User && joinPoint.getArgs()[1] instanceof Event) {
             User user = (User) joinPoint.getArgs()[0];
+            Event event = (Event) joinPoint.getArgs()[1];
 
             Class<?> clazz = joinPoint.getTarget().getClass();
 
-            if (!discountCounter.containsKey(clazz)
-                    || Objects.isNull(discountCounter.get(clazz).get(user))) {
-                userMap.put(user, 0);
-                discountCounter.put(clazz, userMap);
+            if (!ticketDiscountCallCounter.containsKey(clazz)
+                    || Objects.isNull(ticketDiscountCallCounter.get(clazz).get(user))) {
+                userMap.put(user, 0L);
+                ticketDiscountCallCounter.put(clazz, userMap);
                 System.out.println("getDiscount is called at first time " + joinPoint.getTarget().getClass().getSimpleName());
+                eventTicketDiscountCallCount(event);
 
             } else {
-                Map<User, Integer> userMap = discountCounter.get(clazz);
+                Map<User, Long> userMap = ticketDiscountCallCounter.get(clazz);
                 userMap.put(user, userMap.get(user) + 1);
 
-                discountCounter.put(clazz, userMap);
-                System.out.println("getDiscount is called");
+                ticketDiscountCallCounter.put(clazz, userMap);
+
+                eventTicketDiscountCallCount(event);
+
+                callCountDao.updateDiscountCounterByEvent(event, eventTicketDiscountCallCounter.getOrDefault(event, 0L));
+
+                System.out.println("getDiscount is called" + joinPoint.getTarget().getClass().getSimpleName());
             }
         }
     }
 
-    public Map<Class<?>, Map<User, Integer>> getDiscountCounter() {
-        return Collections.unmodifiableMap(discountCounter);
+    private void eventTicketDiscountCallCount(Event event) {
+        long currentCount = eventTicketDiscountCallCounter.getOrDefault(event, 0L);
+        eventTicketDiscountCallCounter.put(event, currentCount + 1L);
     }
 
-    public void setDiscountCounter(Map<Class<?>, Map<User, Integer>> discountCounter) {
-        this.discountCounter = discountCounter;
+    public Map<Class<?>, Map<User, Long>> getTicketDiscountCallCounter() {
+        return Collections.unmodifiableMap(ticketDiscountCallCounter);
+    }
+
+    public void setTicketDiscountCallCounter(Map<Class<?>, Map<User, Long>> ticketDiscountCallCounter) {
+        this.ticketDiscountCallCounter = ticketDiscountCallCounter;
     }
 }

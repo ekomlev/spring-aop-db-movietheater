@@ -1,13 +1,14 @@
 package com.epam.spring.movieTheaterManagement.discount;
 
-import com.epam.spring.movieTheaterManagement.domain.Event;
-import com.epam.spring.movieTheaterManagement.domain.User;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.epam.spring.movieTheaterManagement.domain.Event;
+import com.epam.spring.movieTheaterManagement.domain.User;
 
 @Component("birthdayDiscountStrategy")
 @PropertySource("file:src/main/resources/discount.properties")
@@ -19,7 +20,7 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
 
     @Override
     public double getDiscount(User user, Event event, LocalDateTime eventDateTime, Long numberOfTickets) {
-        if (Objects.isNull(user.getBirthday()) || Objects.isNull(eventDateTime)) {
+        if (Objects.isNull(user) || Objects.isNull(user.getBirthday()) || Objects.isNull(eventDateTime)) {
             return 0;
         } else {
             int actualDaysDelta = eventDateTime.getDayOfYear() - user.getBirthday().getDayOfYear();
