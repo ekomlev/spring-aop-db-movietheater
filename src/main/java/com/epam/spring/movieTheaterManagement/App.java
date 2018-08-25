@@ -17,10 +17,7 @@ import com.epam.spring.movieTheaterManagement.domain.Event;
 import com.epam.spring.movieTheaterManagement.domain.EventRating;
 import com.epam.spring.movieTheaterManagement.domain.Ticket;
 import com.epam.spring.movieTheaterManagement.domain.User;
-import com.epam.spring.movieTheaterManagement.service.AuditoriumService;
-import com.epam.spring.movieTheaterManagement.service.BookingService;
-import com.epam.spring.movieTheaterManagement.service.EventService;
-import com.epam.spring.movieTheaterManagement.service.UserService;
+import com.epam.spring.movieTheaterManagement.service.*;
 
 public class App {
 
@@ -33,7 +30,7 @@ public class App {
         ctx.scan("com.epam.spring.movieTheaterManagement");
         ctx.refresh();
 
-        UserService theaterUserService = (UserService) ctx.getBean("theaterUserService");
+        UserService theaterUserService = (UserService) ctx.getBean(TheaterUserService.class);
         out.println("Users before: " + theaterUserService.getAll());
         createUsers(theaterUserService);
         out.println("Get user by id = 2: " + theaterUserService.getById(2L));

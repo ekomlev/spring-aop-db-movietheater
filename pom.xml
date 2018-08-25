@@ -4,9 +4,8 @@
     <groupId>com.epam.spring.movieTheaterManagementmovieTheaterManagement</groupId>
     <artifactId>movie-theater-management</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Spring Core Hometask Skeleton</name>
-    <description>A skeleton project for the students of Spring Core MOOC course that can be used to do the hometask
-        assignment
+    <name>Spring Core - Movie theater</name>
+    <description>Spring Core MOOC course hometask
     </description>
 
     <properties>
